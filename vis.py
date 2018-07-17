@@ -1,12 +1,11 @@
 import sys
-#sys.path.insert(0,'/home/Dlab/MFC')
 from MFC import MFC
 import serial
 from guizero import App, TextBox,  Box, PushButton, Text, Window, MenuBar, warn, yesno, ListBox
 import  ChkUsrInputX
 import binascii
 
-
+Experiment_in_Progress = False
 file_name = ""
 count= 0
 flow = MFC()
@@ -18,42 +17,21 @@ s.write(flow.Stream_Write('Echo'))
 
 def get_flow_Rate():
 	s.write(flow.flow_Read_Cmd)               ## Writes Read flow command 
-
 	a = s.read_until(CR)			## Reads valuw back until cr
-
-
 	a_hex =  binascii.hexlify(a)    ## turns in to byte  b''  hex
-	# print("hexlify", a_hex)
-
 	a_hex_str = str(a_hex)
-	# print("str(a_hex) a_hex", a_hex_str)
-
 	str_hex =  a_hex_str[2:-7]
-	# print("Change length", str_hex)
-
 	un_hex = binascii.unhexlify(str_hex)
-#	print("unhexlify", un_hex)
-
 	un_hex_str = str(un_hex)
 #	print("String unhex", un_hex_str)
 	if un_hex_str[2] == 'F':
-
 		value = un_hex_str[6:-1]
-		#  print("Value =", value)
-
 		flow_Value = float(value)
-
 		flow.set_flow_Rate(flow_Value)
-		print("Flow rate is ", flow_Value)
 		return flow_Value
 	else:
-#		print("char is ", un_hex_str[2])
 		get_flow_Rate()
 		return 0
-
-
-
-
 
 
 
@@ -64,8 +42,8 @@ def enable_Log():	# Opens Logging Window
 
 
 
-
 ## Gui Functions
+
 def ask_to_close():     # Propmts User before Program Exits
 	if yesno("Exit", "Do you want to quit?"):
 		gui.destroy()
@@ -172,18 +150,13 @@ def prime_Valve():
 	primeBox.after(5000,Initilize_Valve)
 def Initilize_Valve():
 	print("Initialize Valve")
-#	set_Flow()         #  Turn off in no Serial
-#	InitBox.enable()
-#	InitBox.show()
-#	confirmBox.disable()
-#	confirmBox.hide()
 	waitBox = Box(transfer_mol_Window)
-
 	waitBox.after(1000,wait_for_Flow)
+
 def wait_for_Flow():
 	global count
 	prime = get_flow_Rate()
-	print("Wait for flow prime = ", prime)
+
 	if int(prime*100)<=1:
 		count = count +1
 		print(count)

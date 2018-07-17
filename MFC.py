@@ -305,3 +305,17 @@ class MFC:
 		str_time =  mins_str+ " mins : " + sec_str + " secs"
 		return str_time
 
+
+
+	def decode_Msg(self, Msg):
+		Msg_hex = binascii.hexlify(Msg)
+		Msg_hex_str = str(Msg_hex)
+		str_hex_Msg = Msg_hex[2:-7]
+		un_hex_Msg = binascii.unhexlify(str_hex_Msg)
+		un_hex_str = str(un_hex_Msg)
+		if un_hex_str[2] == 'F':
+			Value = un_hex_str[6:-1]
+			self.set_flow_Rate(float(Value))
+			return Value
+		else:
+			
