@@ -167,9 +167,11 @@ def wait_for_Flow():
 		return
 
 def RUN_Experiment():
-
+	
 	global  Experiment_in_Progress
+
 	Experiment_in_Progress = True
+
 	InitBox.disable()
 	InitBox.hide()
 	close_Exp_Conf()
@@ -192,6 +194,7 @@ def RUN_Experiment():
 def Write_Log():
 	if Experiment_in_Progress== True:
 		flow.write_file()
+		print("Write_File")
 	else:
 		return
 

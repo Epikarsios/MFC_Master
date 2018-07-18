@@ -78,7 +78,7 @@ class MFC:
 	time_Remaining_str = ""
 	temp_epoch_time = 0
 
-	default_path = "/home/Dlab/MFC/Logs/temp_Logs/"
+	default_path = "/home/pi/Dlab/MFC_Master/Logs/temp_Logs/"
 	default_type = ".txt"
 	path_filename = ""
 
@@ -318,4 +318,4 @@ class MFC:
 			self.set_flow_Rate(float(Value))
 			return Value
 		else:
-			
+			return

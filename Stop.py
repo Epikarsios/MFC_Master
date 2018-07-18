@@ -1,4 +1,4 @@
-import MFC
+from MFC import MFC
 import serial
 
 s = serial.Serial('/dev/ttyUSB0')
